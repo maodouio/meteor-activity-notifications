@@ -5,18 +5,18 @@ Meteor.methods({
   multiSendMessage: function(list, content) {
     var token = Meteor.call("accessToken");
     var url = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=" + token;
-      console.log('==================================userId_list>', list);
+      // console.log('==================================userId_list>', list);
 
     _.map(list, function(userId) {
-      console.log('==================================userId>', userId);
+      // console.log('==================================userId>', userId);
       var user = Meteor.users.findOne({_id: userId});
       var openid = "";
       if (user) {
         openid = user.openid;
-      console.log('==================================openID>', openid);
+      // console.log('==================================openID>', openid);
 
       }
-      console.log("====> sending Message to ", openid);
+      // console.log("====> sending Message to ", openid);
       var a = {
         "touser": openid,
         // "touser": "ogcWawd2oLZBkfxKtJ_5v0tVaH9Q",
@@ -26,7 +26,7 @@ Meteor.methods({
           "content": content
         }
       };
-      console.log('==================================', a);
+      // console.log('==================================', a);
       HTTP.post(url, {
         data: a
       }, function(err, res) {
@@ -34,9 +34,10 @@ Meteor.methods({
           console.log("sendMessageToUser.error", err);
         }
         if (res) {
-          console.log("sendMessageToUser.result", JSON.stringify(res, {
+          var r = JSON.stringify(res, {
             indent: true
-          }));
+          });
+          console.log("sendMessageToUser.result", r);
         }
       });
     });
@@ -60,7 +61,7 @@ Meteor.methods({
       if (user) {
         openid = user.openid;
       }
-      console.log("====> sending Message to ", openid);
+      // console.log("====> sending Message to ", openid);
       var a = {
         "touser": openid,
         "msgtype": "news",
@@ -88,9 +89,10 @@ Meteor.methods({
           console.log("sendMessageToUser.error", err);
         }
         if (res) {
-          console.log("sendMessageToUser.result", JSON.stringify(res, {
+          var r = JSON.stringify(res, {
             indent: true
-          }));
+          });
+          console.log("sendMessageToUser.result", r);
         }
       });
     });
